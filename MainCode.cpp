@@ -329,7 +329,7 @@ int daysBetween(const std::string& startDate, const std::string& endDate, MySQL&
         return static_cast<int>(difference);
     } catch (const std::invalid_argument& e) {
         // Log invalid argument error for dates
-        std::string query = "INSERT INTO error_log (error_type, error_message, timestamp) VALUES ('Invalid Date Argument', 'Invalid argument: " + e.what() + "', CURDATE())";
+        std::string query = "INSERT INTO error_log (error_type, error_message, timestamp) VALUES ('Invalid Date Argument', 'Invalid argument: " + std::string(e.what()) + "', CURDATE())";
         if (mysql_query(db.con, query.c_str()) != 0) {
             std::cerr << "Error logging invalid date argument: " << mysql_error(db.con) << std::endl;
         }

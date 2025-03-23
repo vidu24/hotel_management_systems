@@ -541,7 +541,7 @@ class MySQL {
         // Constructor - Initialize connection to MySQL database
         MySQL() {
             con = mysql_init(nullptr);
-            con = mysql_real_connect(con, "localhost", "root", "1234", "u23ai007", 0, nullptr, 0);
+            con = mysql_real_connect(con, "localhost", "root", "krishna24#234", "vidwath", 0, nullptr, 0);
             if (!con) {
                 cout << "Connection failed: " << mysql_error(con) << endl;
                 exit(1);
@@ -838,29 +838,31 @@ class MySQL {
                     
                     int t;
                 RoomType:
+                do {
                     cout << "Enter Room type: ";
                     cin >> t;
                     if (t < 1 || t > 4) {
                         cout << "\nInvalid Room type\n";
-                        goto RoomType;
                     }
+                } while (t < 1 || t > 4);
                     
                     int roomNo;
                 RoomNo:
                     cout << "Enter Room No: ";
                     cin >> roomNo;
                     
-                    // Uncomment the following logic if you implement room availability check
-                    // rooms.clear();
-                    // C1.availability(t, rooms);
-                    // if (rooms.empty()) {
-                    //     cout << endl << "Rooms not available... Choose another room type" << endl;
-                    //     goto RoomType;
-                    // }
-                    // if (rooms.find(roomNo) == rooms.end()) {
-                    //     cout << endl << "The room is not available" << endl;
-                    //     goto RoomNo;
-                    // }
+                   
+                     set<int> rooms; // Declare the variable
+                     rooms.clear();
+                     db.availability(t, rooms);
+                     if (rooms.empty()) {
+                         cout << endl << "Rooms not available... Choose another room type" << endl;
+                         goto RoomType;
+                     }
+                     if (rooms.find(roomNo) == rooms.end()) {
+                         cout << endl << "The room is not available" << endl;
+                         goto RoomNo;
+                     }
     
                     // Set the room details for the customer
                     R.SetData(t, roomNo);
